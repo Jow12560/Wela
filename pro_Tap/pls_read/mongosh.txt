@@ -1,0 +1,24 @@
+# Initialize the MongoClient with your MongoDB Atlas connection string
+try:
+    client = MongoClient('mongodb+srv://Thaveephon:joker555@dbdproject.ig7xzop.mongodb.net/')
+    print("Connected to MongoDB Atlas successfully")
+except pymongo.errors.ConnectionFailure as e:
+    print("Could not connect to MongoDB Atlas:", e)
+    exit(1)
+
+# Access the 'dbd_datawarehouse' database and the 'central' collection
+db = client['dbd_datawarehouse']
+central_collection = db['central']
+
+# Query data from the 'central' collection and convert it to a DataFrame
+data = list(central_collection.find())
+df = pd.DataFrame(data)
+
+# Convert the DataFrame to a CSV-like string (comma-separated values)
+csv_like_data = df.to_csv(index=False, header=False)
+
+# Assuming you have a 'business_category' column in your DataFrame
+category_to_filter = 'ที่พักแรมและบริการด้านอาหาร'
+
+# Use the loc method to filter rows where 'business_category' matches the specified value
+filtered_central = df.loc[df['business_category'] == category_to_filter]

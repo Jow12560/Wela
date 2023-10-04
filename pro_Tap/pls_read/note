@@ -1,0 +1,40 @@
+1.You can use algorithms like 
+logistic regression, 
+decision trees, 
+random forests, or 
+support vector machines for classification 
+
+r 42 
+14.15 0.6
+14.26 0.5
+14.15 0.4
+
+r52
+
+15.33 0.6
+15.63 0.5
+
+with remove outlier 
+17.07
+
+No missing data 
+Tried all model best is logistic regression
+
+
+<!-- X_train -->
+db = pd.read_csv('cen_eat.csv')
+# Extract features and target variable
+X = db[['business_type', 'profit_margin']].copy()
+y = db['district'].copy()
+# Encode categorical features using One-Hot Encoding
+X = pd.get_dummies(X, columns=['business_type'], prefix=['business_type'])
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=52)
+# Standardize numerical features
+scaler = StandardScaler()
+X_train[['profit_margin']] = scaler.fit_transform(X_train[['profit_margin']])
+
+
+โรงแรม รีสอร์ทและห้องชุด  -47676.98951 เขตดอนเมือง
+โรงแรม รีสอร์ทและห้องชุด  4004.334453  เขตวัฒนา
+เกสต์เฮ้าส์  1752.7664359999999 เขตพระนคร
